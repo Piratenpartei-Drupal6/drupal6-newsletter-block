@@ -1,0 +1,66 @@
+<?php
+
+/**
+* Display help and module information.
+* @param path
+*   Which path of the site we're displaying help.
+* @param arg
+*   Array that holds the current path as would be returned from arg() function.
+* @return
+*   help text for the path.
+*/
+function pp_newsletter_help($path, $arg) {
+  $output = '';
+  switch ($path) {
+    case "admin/help#pp_newsletter":
+      $output = '<p>'. t("Zeigt den Block für Piratenpartei Deutschland Newsletter an").'</p>';
+      break;
+  }
+  return $output;
+} // function pp_newsletter_help
+
+
+/**
+* Valid permissions for this module
+* @return array An array of valid permissions for the pp_newsletter module
+*/
+
+function pp_newsletter_perm() {
+  return array('access pp_newsletter content');
+} // function pp_newsletter_perm()
+
+
+/**
+* Generate HTML for the pp_newsletter block
+* @param op the operation from the URL
+* @param delta offset
+* @returns block HTML
+*/
+function pp_newsletter_block($op='list', $delta=0) {
+
+  // listing of blocks, such as on the admin/block page
+  if ($op == "list") {
+    $block[0]["info"] = t('Piratenpartei Deutschland Newsletter');
+    return $block;
+  } else if ($op == 'view') {
+  // our block content
+    // content variable that will be returned for display
+	$block_content  = '<div class="form-item">';
+    $block_content .= '<form method="post" action="http://service.piratenpartei.de/mailman/subscribe/newsletter">';
+	$block_content .= '<img src="http://www.piratenpartei.de/tmp/images/newsletter200x70.png" width="200" height="70" alt="" />';
+	$block_content .= '<br />';
+	$block_content .= '<label for="email">Deine Mailadresse:</label>';
+	$block_content .= '<input type="text" name="email" id="email" size="20" value="" title="Geben Sie Ihre E-Mailadresse ein." />';
+	$block_content .= '<input type="hidden" name="pw" /><input type="hidden" name="pw-conf" />';
+	$block_content .= '<br />';
+	$block_content .= '<input type="submit" name="email-button" value="Abonnieren" height="10" />';
+	$block_content .= '</form>';
+	$block_content .= '</div>';
+    // set up the block
+    $block['subject'] = '';
+    $block['content'] = $block_content;
+    return $block;
+  }
+}
+
+?>

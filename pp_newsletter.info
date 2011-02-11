@@ -1,0 +1,5 @@
+; $Id$
+name = Piratenpartei Newsletter
+description = Block für den Piratenpartei Deutschland Newsletter
+core = 6.x
+version = "6.x-1.0"
